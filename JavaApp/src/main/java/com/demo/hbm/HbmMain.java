@@ -18,7 +18,8 @@ public class HbmMain {
         session.beginTransaction();
 //        addUser();
 //        listUsers();
-        updateUser();
+//        updateUser();
+        deleteUser();
         session.getTransaction().commit();
         session.close();
     }
@@ -40,10 +41,16 @@ public class HbmMain {
         }
     }
 
-    public  static void updateUser(){
+    public static void updateUser() {
         User user = (User) session.get(User.class, 1);
-        System.out.println("User found : "+ user);
+        System.out.println("User found : " + user);
         user.setUsername("Rahul-".concat(new Date().toString()));
         session.update(user);
+    }
+
+    public static void deleteUser() {
+        User user = (User) session.get(User.class, 1);
+        System.out.println("Deleting User: " + user);
+        session.delete(user);
     }
 }
