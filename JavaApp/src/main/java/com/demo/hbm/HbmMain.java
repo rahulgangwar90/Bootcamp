@@ -17,12 +17,13 @@ public class HbmMain {
     public static void main(String[] args) {
         session.beginTransaction();
 //        addUser();
-        listUsers();
+//        listUsers();
+        updateUser();
         session.getTransaction().commit();
         session.close();
     }
 
-    public static void addUser(){
+    public static void addUser() {
         User user = new User();
         user.setUsername("rahul");
         user.setCreatedBy("system");
@@ -31,11 +32,18 @@ public class HbmMain {
         System.out.println("Saved user: " + user);
     }
 
-    public static void listUsers(){
+    public static void listUsers() {
         List users = session.createQuery("FROM User").list();
-        for (Iterator iterator = users.iterator(); iterator.hasNext();){
+        for (Iterator iterator = users.iterator(); iterator.hasNext(); ) {
             User user = (User) iterator.next();
             System.out.println("Username: " + user.getUsername());
         }
+    }
+
+    public  static void updateUser(){
+        User user = (User) session.get(User.class, 1);
+        System.out.println("User found : "+ user);
+        user.setUsername("Rahul-".concat(new Date().toString()));
+        session.update(user);
     }
 }
